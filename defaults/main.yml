@@ -20,6 +20,8 @@ borg_retention_policy:
   keep_monthly: 6
 create_repo: False
 ssh_key_file: .ssh/id_ed25519
+borgmatic_ssh_private_key: ''
+borgmatic_ssh_public_key: ''
 bb_new_sshkey: True
 bb_append: True
 bb_quota: False

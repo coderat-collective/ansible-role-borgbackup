@@ -29,6 +29,18 @@
     name: "{{ borg_python_packages }}"
     executable: "{{ pip_bin }}"
 
+- name: Place ssh private key
+  copy:
+    conent: "{{ borgmatic_ssh_private_key }}"
+    dest: "/root/.ssh/{{ ssh_key_file }}"
+  when: borgmatic_ssh_private_key is not ''
+
+- name: Place ssh public key
+  copy:
+    conent: "{{ ssh_public_key }}"
+    dest: "/root/.ssh/{{ ssh_key_file }}.pub"
+  when: borgmatic_ssh_public_key is not ''
+
 - name: Ensure root has SSH key.
   user:
     name: "root"
@@ -36,6 +48,7 @@
     ssh_key_file: "{{ ssh_key_file }}"
     ssh_key_type: ed25519
   register: root_user
+  when: ssh_private_key is ''
 
 - debug:
     var: root_user['ssh_public_key']
